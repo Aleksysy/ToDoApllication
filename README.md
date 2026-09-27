@@ -1,4 +1,4 @@
-# Project Title
+# ToDoApplication
 
 A simple to do application written in C#. 
 
@@ -20,11 +20,12 @@ git clone https://github.com/Aleksysy/TodoApllication.git
 cd ToDoApplication
 ```
 
-Install the following NuGet packages using package browser ot dotnet CLI (package versions should match sdk version):
-Microsoft.EntityFrameworkCore.Sqlite
+Install the following NuGet packages using package browser ot dotnet CLI (package versions should match sdk version):  
+Microsoft.EntityFrameworkCore.Sqlite  
 Microsoft.EntityFrameworkCore.Design
 
 ```bash
+# Install the following packages
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite -v 8.0.12
 dotnet add package Microsoft.EntityFrameworkCore.Design -v 8.0.12
 ```
