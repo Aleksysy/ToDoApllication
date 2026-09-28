@@ -1,29 +1,40 @@
 using System;
+using ToDoApplication.Classes.Views;
 
-namespace ToDoApllication.Classes.Views
+namespace ToDoApplication.Classes.Controllers
 {
-  class ContentDisplay
+  class DisplayController
   {
-    public static void PrintAppHeader()
-    {
-      Console.WriteLine("Welcome to ToDoApplication CLI\n");
-      Console.WriteLine("Use up/down keys to navigate and enter to select:\n\n");
-    }
-
-    public static void PrintOptions()
+    public void UpdateDisplay(string viewName)
     {
       Console.CursorVisible = false;
-
-      string[] selectOptions = {"Login", "Register", "Close"};
+      string[] selectOptions = [];
       int selectIndex = 0;
-
       bool selecting = true;
+
+      IView currentView = new Home();
+
+      switch (viewName)
+      {
+        case "home":
+          currentView = new Home();
+          break;
+        case "login":
+          currentView = new Login();
+          break;
+        case "register":
+          currentView = new Register();
+          break;
+      }
+
+      selectOptions = currentView.SelectOptions;
 
       while (selecting)
       {
         Console.Clear();
 
-        PrintAppHeader();
+        AppHeader appHeader = new AppHeader();
+        appHeader.PrintAppHeader();
 
         for (int i = 0; i < selectOptions.Length; i++)
         {
@@ -39,8 +50,8 @@ namespace ToDoApllication.Classes.Views
           }
         }  
 
-        ConsoleKeyInfo keyInfo = Console.ReadKey(true); 
-
+        ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+      
         switch (keyInfo.Key)
         {
           case ConsoleKey.DownArrow:
@@ -53,17 +64,11 @@ namespace ToDoApllication.Classes.Views
             break;
           case ConsoleKey.Enter:
             selecting = false;
-            Console.CursorVisible = true;
-            Environment.Exit(0);
             break;
         }
       }
 
-      Console.CursorVisible = true;
-      Console.Clear();
-      Console.WriteLine($"You have selected {selectOptions[selectIndex]}");
-      Console.WriteLine("\nPress any key to exit...");
-      Console.ReadKey();
+      currentView.ExecuteOption(selectIndex);
     }
   }
 }

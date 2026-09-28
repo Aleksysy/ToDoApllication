@@ -14,7 +14,7 @@ A simple to do application written in C#.
 
 ```bash
 # Clone the repository
-git clone https://github.com/Aleksysy/TodoApllication.git
+git clone https://github.com/Aleksysy/ToDoApllication.git
 
 # Navigate into the directory
 cd ToDoApplication
@@ -22,12 +22,14 @@ cd ToDoApplication
 
 Install the following NuGet packages using package browser ot dotnet CLI (package versions should match sdk version):  
 Microsoft.EntityFrameworkCore.Sqlite  
-Microsoft.EntityFrameworkCore.Design
+Microsoft.EntityFrameworkCore.Design  
+BCrypt.Net-Next
 
 ```bash
 # Install the following packages
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite -v 8.0.12
 dotnet add package Microsoft.EntityFrameworkCore.Design -v 8.0.12
+dotnet add package BCrypt.Net-Next
 ```
 
 Or you can use the prebuilt application

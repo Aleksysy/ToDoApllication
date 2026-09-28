@@ -1,5 +1,5 @@
 ﻿using System;
-using ToDoApllication.Classes.Views;
+using ToDoApplication.Classes.Controllers;
 using ToDoApplication.Data;
 
 namespace ToDoApplication
@@ -8,9 +8,8 @@ namespace ToDoApplication
   {
     static void Main(string[] args)
     {
-      using AppDbContext db = new AppDbContext();
-      
-      ContentDisplay.PrintOptions();
+      DisplayController displayController = new DisplayController();
+      displayController.UpdateDisplay("home");
     }
   }
 }
