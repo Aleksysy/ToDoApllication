@@ -8,7 +8,7 @@ namespace ToDoApplication.Classes.Controllers
     public void UpdateDisplay(string viewName)
     {
       Console.CursorVisible = false;
-      string[] selectOptions = [];
+      List<ViewOption> selectOptions;
       int selectIndex = 0;
       bool selecting = true;
 
@@ -27,26 +27,25 @@ namespace ToDoApplication.Classes.Controllers
           break;
       }
 
-      selectOptions = currentView.SelectOptions;
+      selectOptions = currentView.Options;
 
       while (selecting)
       {
         Console.Clear();
 
-        AppHeader appHeader = new AppHeader();
-        appHeader.PrintAppHeader();
+        currentView.PrintAppHeader();
 
-        for (int i = 0; i < selectOptions.Length; i++)
+        for (int i = 0; i < selectOptions.Count; i++)
         {
           if (i == selectIndex)
           {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{selectOptions[i]}*");
+            Console.WriteLine($"{selectOptions[i].ItmLabel}*");
             Console.ResetColor();
           }
           else
           {
-            Console.WriteLine(selectOptions[i]);
+            Console.WriteLine(selectOptions[i].ItmLabel);
           }
         }  
 
@@ -56,19 +55,39 @@ namespace ToDoApplication.Classes.Controllers
         {
           case ConsoleKey.DownArrow:
             selectIndex++;
-            if (selectIndex >= selectOptions.Length) selectIndex = 0;
+            if (selectIndex >= selectOptions.Count) selectIndex = 0;
             break;
           case ConsoleKey.UpArrow:
             selectIndex--;
-            if (selectIndex < 0) selectIndex = selectOptions.Length - 1;
+            if (selectIndex < 0) selectIndex = selectOptions.Count - 1;
             break;
           case ConsoleKey.Enter:
-            selecting = false;
+            if (selectOptions[selectIndex].ItmType == OptionType.Input)
+            {
+              currentView.EditInputField(selectIndex);
+            }
+            else if (selectOptions[selectIndex].ItmType == OptionType.Password)
+            {
+              currentView.EditPasswordField(selectIndex);
+            }
+            else
+            {
+              selecting = false;
+            }
+
             break;
         }
       }
 
       currentView.ExecuteOption(selectIndex);
+    }
+
+    public static void QuitApp()
+    {
+      Console.Clear();
+      Console.CursorVisible = true;
+      
+      Environment.Exit(0);
     }
   }
 }

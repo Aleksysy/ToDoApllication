@@ -4,12 +4,21 @@ namespace ToDoApplication.Classes.Views
 {
   class Register : IView
   {
-    private string[] selectOptions = {"Register", "Back"};
+    private List<ViewOption> options = [
+      new("Username: []", OptionType.Input, ""),
+      new("Password: []", OptionType.Password, ""),
+      new("Verify Password: []", OptionType.Password, ""),
+      new("Register", OptionType.Action, ""),
+      new("back", OptionType.Back, ""),
+    ];
 
-    public string[] SelectOptions
+    public List<ViewOption> Options
     {
-      get { return this.selectOptions; }
+      get { return options; }
     }
+
+    public void EditInputField(int index) {}
+    public void EditPasswordField(int index) {}
 
     public void ExecuteOption(int selectedIndex)
     {
@@ -19,12 +28,23 @@ namespace ToDoApplication.Classes.Views
       {
         case 0:
             Console.WriteLine("Registering...");
-            Environment.Exit(0);
+            DisplayController.QuitApp();
             break;
         case 1:
             displayController.UpdateDisplay("home");
             break;
       }
+    }
+
+    public string GetAppHeader()
+    {
+      return "ToDoApplication CLI\n" +
+             "===REGISTER===\n\n";
+    }
+
+    public void PrintAppHeader()
+    {
+      Console.WriteLine(GetAppHeader());
     }
   }
 }

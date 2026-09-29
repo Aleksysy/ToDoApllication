@@ -5,12 +5,19 @@ namespace ToDoApplication.Classes.Views
 {
   public class Home : IView
   {
-    private string[] selectOptions = {"Login", "Register", "Exit"};
+    private List<ViewOption> options = [
+      new("Login", OptionType.Action, ""),
+      new("Register", OptionType.Action, ""),
+      new("exit", OptionType.Action, ""),
+    ];
 
-    public string[] SelectOptions
+    public List<ViewOption> Options
     {
-      get { return this.selectOptions; }
+      get { return options; }
     }
+
+    public void EditInputField(int index) {}
+    public void EditPasswordField(int index) {}
 
     public void ExecuteOption(int selectedIndex)
     {
@@ -25,10 +32,20 @@ namespace ToDoApplication.Classes.Views
             displayController.UpdateDisplay("register");
             break;
         case 2:
-            Console.CursorVisible = true;
-            Environment.Exit(0);
+            DisplayController.QuitApp();
             break;
       }
+    }
+
+    public string GetAppHeader()
+    {
+      return "ToDoApplication CLI\n" +
+             "Use up/down keys to navigate and enter to select:\n\n";
+    }
+
+    public void PrintAppHeader()
+    {
+      Console.WriteLine(GetAppHeader());
     }
   }
 }
