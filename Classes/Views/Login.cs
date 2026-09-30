@@ -29,21 +29,14 @@ namespace ToDoApplication.Classes.Views
 
     private void EditUsernameField(int index)
     {
-      // Ask for username
       Console.Clear();
 
       Console.Write("Enter username: ");
       string fieldValue = Console.ReadLine();
 
-      // Check errors in input
-
       options[index].ItmValue = fieldValue;
 
-      // Update all
       options[0].ItmLabel = $"Username: [{options[0].ItmValue}]";
-
-      string maskedPassword = new string('*', options[1].ItmValue.Length);
-      options[1].ItmLabel = $"Password: [{maskedPassword}]";
     }
 
     private void EditPasswordField1(int index)
@@ -55,27 +48,23 @@ namespace ToDoApplication.Classes.Views
 
       options[index].ItmValue = fieldValue;
 
-      // Update all
-      options[0].ItmLabel = $"Username: [{options[0].ItmValue}]";
-
       string maskedPassword = new string('*', options[1].ItmValue.Length);
       options[1].ItmLabel = $"Password: [{maskedPassword}]";
     }
 
-    public void ExecuteOption(int selectedIndex)
+    public string? ExecuteOption(int selectedIndex)
     {
       DisplayController displayController = new DisplayController();
 
       switch (selectedIndex)
       {
         case 2:
-            Console.WriteLine("Logging in...");
-            DisplayController.QuitApp();
-            break;
+          return "login";
         case 3:
-            displayController.UpdateDisplay("home");
-            break;
+          return "home";
       }
+
+      return null;
     }
 
     public string GetAppHeader()

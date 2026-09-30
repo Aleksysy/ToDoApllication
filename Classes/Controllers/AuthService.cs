@@ -7,15 +7,17 @@ namespace ToDoApplication.Classes.Controllers
   {
     private readonly AppDbContext db;
 
-    public AuthService(AppDbContext db)
+    public AuthService()
     {
-      this.db = db;
+      db = new AppDbContext();
     }
 
     public int Register(
       string username,
       string password)
     {
+      if (username.Length < 5 || password.Length < 5) return 1;
+
       bool exists = db.Users.Any(x => x.Username == username);
 
       if (exists) return 1;

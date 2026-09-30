@@ -33,7 +33,7 @@ namespace ToDoApplication.Classes.Views
     public void EditInputField(int index);
     public void EditPasswordField(int index);
 
-    void ExecuteOption(int index);
+    string? ExecuteOption(int index);
 
     public string GetAppHeader();
     public void PrintAppHeader();

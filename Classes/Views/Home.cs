@@ -19,7 +19,7 @@ namespace ToDoApplication.Classes.Views
     public void EditInputField(int index) {}
     public void EditPasswordField(int index) {}
 
-    public void ExecuteOption(int selectedIndex)
+    public string? ExecuteOption(int selectedIndex)
     {
       DisplayController displayController = new DisplayController();
 
@@ -35,6 +35,8 @@ namespace ToDoApplication.Classes.Views
             DisplayController.QuitApp();
             break;
       }
+
+      return null;
     }
 
     public string GetAppHeader()

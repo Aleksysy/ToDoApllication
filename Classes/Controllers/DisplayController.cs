@@ -13,6 +13,7 @@ namespace ToDoApplication.Classes.Controllers
       bool selecting = true;
 
       IView currentView = new Home();
+      string? targetView = null;
 
       switch (viewName)
       {
@@ -37,10 +38,13 @@ namespace ToDoApplication.Classes.Controllers
 
         for (int i = 0; i < selectOptions.Count; i++)
         {
+          if (i > 0 && selectOptions[i - 1].ItmType != OptionType.Action &&
+          selectOptions[i].ItmType == OptionType.Action) Console.WriteLine();
+
           if (i == selectIndex)
           {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{selectOptions[i].ItmLabel}*");
+            Console.WriteLine($"{selectOptions[i].ItmLabel} <");
             Console.ResetColor();
           }
           else
@@ -70,8 +74,14 @@ namespace ToDoApplication.Classes.Controllers
             {
               currentView.EditPasswordField(selectIndex);
             }
-            else
+            else if (selectOptions[selectIndex].ItmType == OptionType.Action)
             {
+              targetView = currentView.ExecuteOption(selectIndex);
+              selecting = targetView == null ? true : false;
+            }
+            else if (selectOptions[selectIndex].ItmType == OptionType.Back)
+            {
+              currentView.ExecuteOption(selectIndex);
               selecting = false;
             }
 
@@ -79,7 +89,8 @@ namespace ToDoApplication.Classes.Controllers
         }
       }
 
-      currentView.ExecuteOption(selectIndex);
+      if (targetView != null) UpdateDisplay(targetView);
+      else UpdateDisplay("home");
     }
 
     public static void QuitApp()

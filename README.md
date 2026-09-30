@@ -1,6 +1,6 @@
 # ToDoApplication
 
-A simple to do application written in C#. 
+A task managing application cli written in C#
 
 ## Features
 
