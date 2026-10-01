@@ -2,7 +2,7 @@ using ToDoApplication.Classes.Models;
 
 namespace ToDoApplication.Classes.Controllers
 {
-  class AuthSession
+  public class AuthSession
   {
     public User? CurrentUser { get; private set; }
     public bool IsAuthenticated => CurrentUser != null;

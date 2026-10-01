@@ -1,10 +1,13 @@
 using System.Dynamic;
 using ToDoApplication.Classes.Controllers;
+using ToDoApplication.Classes.Models;
 
 namespace ToDoApplication.Classes.Views
 {
-  class Login : IView
+  public class Login : IView
   {
+    private AuthSession authSession;
+
     private List<ViewOption> options = [
       new("Username: []", OptionType.Input, ""),
       new("Password: []", OptionType.Password, ""),
@@ -15,6 +18,11 @@ namespace ToDoApplication.Classes.Views
     public List<ViewOption> Options
     { 
       get { return options; } 
+    }
+
+    public Login(AuthSession authSession)
+    {
+      this.authSession = authSession;
     }
 
     public void EditInputField(int index)
@@ -54,12 +62,25 @@ namespace ToDoApplication.Classes.Views
 
     public string? ExecuteOption(int selectedIndex)
     {
-      DisplayController displayController = new DisplayController();
-
       switch (selectedIndex)
       {
         case 2:
-          return "login";
+          AuthService authService = new AuthService();
+
+          string username = options[0].ItmValue;
+          string password = options[1].ItmValue;
+
+          User? user = authService.Login(username, password);
+
+          if (user == null) 
+          {
+            options[2].ItmLabel = "Login | Invalid username or password";
+            return null;
+          }
+
+          authSession.Login(user);
+
+          return "taskitems";
         case 3:
           return "home";
       }

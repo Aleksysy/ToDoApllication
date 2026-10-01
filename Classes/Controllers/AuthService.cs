@@ -3,7 +3,7 @@ using ToDoApplication.Data;
 
 namespace ToDoApplication.Classes.Controllers
 {
-  class AuthService
+  public class AuthService
   {
     private readonly AppDbContext db;
 

@@ -3,8 +3,10 @@ using ToDoApplication.Classes.Views;
 
 namespace ToDoApplication.Classes.Controllers
 {
-  class DisplayController
+  public class DisplayController
   {
+    private AuthSession authSession = new AuthSession();
+
     public void UpdateDisplay(string viewName)
     {
       Console.CursorVisible = false;
@@ -12,19 +14,19 @@ namespace ToDoApplication.Classes.Controllers
       int selectIndex = 0;
       bool selecting = true;
 
-      IView currentView = new Home();
+      IView currentView = new Home(authSession);
       string? targetView = null;
 
       switch (viewName)
       {
-        case "home":
-          currentView = new Home();
-          break;
         case "login":
-          currentView = new Login();
+          currentView = new Login(authSession);
           break;
         case "register":
-          currentView = new Register();
+          currentView = new Register(authSession);
+          break;
+        case "taskitems":
+          currentView = new TaskItems(authSession);
           break;
       }
 

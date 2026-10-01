@@ -5,6 +5,8 @@ namespace ToDoApplication.Classes.Views
 {
   public class Home : IView
   {
+    private AuthSession authSession;
+
     private List<ViewOption> options = [
       new("Login", OptionType.Action, ""),
       new("Register", OptionType.Action, ""),
@@ -14,6 +16,11 @@ namespace ToDoApplication.Classes.Views
     public List<ViewOption> Options
     {
       get { return options; }
+    }
+
+    public Home(AuthSession authSession)
+    {
+      this.authSession = authSession;
     }
 
     public void EditInputField(int index) {}

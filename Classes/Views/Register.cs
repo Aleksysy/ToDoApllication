@@ -3,9 +3,11 @@ using ToDoApplication.Data;
 
 namespace ToDoApplication.Classes.Views
 {
-  class Register : IView
+  public class Register : IView
   {
-    bool inputErr = false;
+    private AuthSession authSession;
+
+    private bool inputErr = false;
 
     private List<ViewOption> options = [
       new("Username: []", OptionType.Input, ""),
@@ -20,12 +22,16 @@ namespace ToDoApplication.Classes.Views
       get { return options; }
     }
 
+    public Register(AuthSession authSession)
+    {
+      this.authSession = authSession;
+    }
+
     public void EditInputField(int index)
     {
       if (index == 0) EditUsernameField(index);
       
       options[3].ItmLabel = "Register";
-
     }
 
     public void EditPasswordField(int index)
@@ -93,7 +99,7 @@ namespace ToDoApplication.Classes.Views
         case 3:
           if (inputErr) return null;
 
-          AuthService authService = new();
+          AuthService authService = new AuthService();
 
           string username = options[0].ItmValue;
           string password = options[1].ItmValue;
