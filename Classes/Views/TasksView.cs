@@ -3,7 +3,7 @@ using ToDoApplication.Classes.Models;
 
 namespace ToDoApplication.Classes.Views
 {
-  public class TaskItems : IView
+  public class TasksView : IView
   {
     private AuthSession authSession;
     TaskItemsController taskItemsController = new TaskItemsController();
@@ -18,7 +18,7 @@ namespace ToDoApplication.Classes.Views
       get { return options; }
     }
 
-    public TaskItems(AuthSession authSession)
+    public TasksView(AuthSession authSession)
     {
       this.authSession = authSession;
 
@@ -37,11 +37,11 @@ namespace ToDoApplication.Classes.Views
 
       foreach (TaskItem taskItem in taskItems)
       {
-        string itmLable = taskItem.IsCompleted ? 
+        string itmLabel = !taskItem.IsCompleted ? 
           taskItem.Title + "[]" : taskItem.Title + "[x]";
 
         options.Add(
-          new(taskItem.Title, OptionType.Action, "" + taskItem.Id)
+          new(itmLabel, OptionType.Action, "" + taskItem.Id)
         );
       }
     }
@@ -86,9 +86,11 @@ namespace ToDoApplication.Classes.Views
           CreateTaskField();
 
           return "taskitems";
+        default:
+          string taskId = options[selectIndex].ItmValue;
+          
+          return "task:" + taskId;
       }
-
-      return null;
     }
 
     public string GetAppHeader()

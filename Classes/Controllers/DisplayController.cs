@@ -20,6 +20,14 @@ namespace ToDoApplication.Classes.Controllers
       IView currentView = new Home(authSession);
       string? targetView = null;
       
+      if (viewName.StartsWith("task:"))
+      {
+        string taskIdString = viewName.Substring(viewName.IndexOf(':') + 1);
+        int taskId = Convert.ToInt32(taskIdString);
+
+        currentView = new TaskView(authSession, taskId);
+      }
+
       switch (viewName)
       {
         case "login":
@@ -30,7 +38,7 @@ namespace ToDoApplication.Classes.Controllers
           break;
         case "taskitems":
           selectIndex = 1;
-          currentView = new TaskItems(authSession);
+          currentView = new TasksView(authSession);
           break;
       }
 
@@ -101,7 +109,7 @@ namespace ToDoApplication.Classes.Controllers
             }
             else if (selectOptions[selectIndex].ItmType == OptionType.Back)
             {
-              currentView.ExecuteOption(selectIndex);
+              targetView = currentView.ExecuteOption(selectIndex);
               selecting = false;
             }
 
