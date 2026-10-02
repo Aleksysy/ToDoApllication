@@ -46,8 +46,12 @@ namespace ToDoApplication.Classes.Views
     {
       Console.Clear();
 
+      Console.CursorVisible = true;
+
       Console.Write("Enter username: ");
       string fieldValue = Console.ReadLine();
+
+      Console.CursorVisible = false;
 
       options[index].ItmValue = fieldValue;
 
@@ -58,8 +62,12 @@ namespace ToDoApplication.Classes.Views
     {
       Console.Clear();
 
+      Console.CursorVisible = true;
+
       Console.Write("Enter password: ");
       string fieldValue = Console.ReadLine();
+
+      Console.CursorVisible = false;
 
       options[index].ItmValue = fieldValue;
 
@@ -71,8 +79,12 @@ namespace ToDoApplication.Classes.Views
     {
       Console.Clear();
 
+      Console.CursorVisible = true;
+
       Console.Write("Repeat password: ");
       string fieldValue = Console.ReadLine();
+
+      Console.CursorVisible = false;
 
       options[index].ItmValue = fieldValue;
 

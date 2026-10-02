@@ -5,7 +5,7 @@ A task managing application cli written in C#
 ## Features
 
 - Create personal user profiles
-- Manage, distribute and share tasks with other users
+- Create, view, edit, delete and mark tasks as done
 - Interactive CLI experience
 
 ## Installation
