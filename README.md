@@ -32,11 +32,27 @@ dotnet add package Microsoft.EntityFrameworkCore.Design -v 8.0.12
 dotnet add package BCrypt.Net-Next
 ```
 
-Or you can use the prebuilt application
+```bash
+# Create database based on the models
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```
+
+```bash
+# Run the application
+dotnet run
+# Or build the application for a target platform
+# For Windows
+dotnet publish -c Release -r win-x64 --self-contained false -o ./publish/windows
+# For Linux
+dotnet publish -c Release -r linux-x64 --self-contained false -o ./publish/linux 
+```
+
+Or you can use the prebuilt application in the repo under ./publish/yourOS
 
 ## Usage
 
-
+Start the application, navigate with arrow up/down and enter keys to register a new user. Login with the newly created user credentials. Create, view, edit, mark as done and delete tasks. 
 
 ## License
 
