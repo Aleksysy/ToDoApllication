@@ -12,11 +12,41 @@ namespace ToDoApplication.Classes.Controllers
       db = new AppDbContext();
     }
 
+    public TaskItem? GetTaskItem(AuthSession authSession, int taskId)
+    {
+      int userId = authSession.CurrentUser!.Id;
+      return db.TaskItems
+        .FirstOrDefault(x => 
+        x.UserId == userId &&
+        x.Id == taskId);
+    }
+
+    public void EditTaskItem(
+      AuthSession authSession,
+      int taskId,
+      string title,
+      string description,
+      bool isCompleted)
+    {
+      int userId = authSession.CurrentUser!.Id;
+      TaskItem? taskItem = db.TaskItems
+        .FirstOrDefault(x =>
+          x.UserId == userId &&
+          x.Id == taskId);
+
+      taskItem.Title = title;
+      taskItem.Description = description;
+      taskItem.IsCompleted = isCompleted;
+
+      db.SaveChanges();
+    }
+
     public List<TaskItem> GetUserTaskItems(AuthSession authSession)
     {
       int userId = authSession.CurrentUser!.Id;
       return db.TaskItems
         .Where(x => x.UserId == userId)
+        .OrderByDescending(p => p.Id)
         .ToList();
     }
 
@@ -35,6 +65,21 @@ namespace ToDoApplication.Classes.Controllers
       db.TaskItems.Add(taskItem);
 
       db.SaveChangesAsync();
+    }
+
+    public void RemoveUserTaskItem(
+      AuthSession authSession,
+      int taskId)
+    {
+      int userId = authSession.CurrentUser!.Id;
+      TaskItem? taskItem = db.TaskItems
+        .FirstOrDefault(x =>
+          x.UserId == userId &&
+          x.Id == taskId);
+
+      db.TaskItems.Remove(taskItem);
+
+      db.SaveChanges();
     }
   }
 }

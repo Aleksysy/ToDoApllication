@@ -8,10 +8,12 @@ namespace ToDoApplication.Classes.Views
     private AuthSession authSession;
     TaskItemsController taskItemsController = new TaskItemsController();
 
+    private int taskItemId;
+
     private List<ViewOption> options = [
-      new("Title: []", OptionType.Action, ""),
-      new("Description: []", OptionType.Action, ""),
-      new("done: []", OptionType.Action, ""),
+      new("Title: []", OptionType.Input, ""),
+      new("Description: []", OptionType.Input, ""),
+      new("Done: []", OptionType.Input, ""),
       new("delete", OptionType.Action, ""),
       new("back", OptionType.Back, ""),
     ];
@@ -24,27 +26,104 @@ namespace ToDoApplication.Classes.Views
     public TaskView(AuthSession authSession, int taskId)
     {
       this.authSession = authSession;
+
+      taskItemId = taskId;
+
+      ShowTaskItemOptions(authSession);
     }
 
-    public void EditInputField(int index) {}
+    private void ShowTaskItemOptions(AuthSession authSession)
+    {
+      TaskItem taskItem = taskItemsController.GetTaskItem(authSession, taskItemId);
+
+      options[0].ItmValue = taskItem.Title;
+      options[0].ItmLabel = $"Title: [{taskItem.Title}]";
+
+      options[1].ItmValue = taskItem.Description;
+      options[1].ItmLabel = $"Title: [{taskItem.Description}]";
+
+      options[2].ItmValue = Convert.ToString(taskItem.IsCompleted);
+      options[2].ItmLabel = !taskItem.IsCompleted ? "Done: []" : "Done: [x]";
+    }
+
+    public void EditInputField(int index)
+    {
+      if (index == 0) TitleInputField();
+      else if (index == 1) DescriptionInputField();
+      else if (index == 2) DoneInputField();
+    }
 
     public void EditPasswordField(int index) {}
+
+    private void TitleInputField()
+    {
+      Console.Clear();
+
+      Console.CursorVisible = true;
+
+      Console.Write("Edit title: ");
+      string? title = Console.ReadLine();
+
+      Console.CursorVisible = false;
+
+      options[0].ItmValue = title;
+      options[0].ItmLabel = $"Title: [{title}]";
+
+      taskItemsController.EditTaskItem(
+        authSession,
+        taskItemId,
+        options[0].ItmValue,
+        options[1].ItmValue,
+        Convert.ToBoolean(options[2].ItmValue)
+      );
+    }
+
+    private void DescriptionInputField()
+    {
+      Console.Clear();
+
+      Console.CursorVisible = true;
+
+      Console.Write("Edit description: ");
+      string? description = Console.ReadLine();
+
+      Console.CursorVisible = false;
+
+      options[1].ItmValue = description;
+      options[1].ItmLabel = $"Description: [{description}]";
+
+      taskItemsController.EditTaskItem(
+        authSession,
+        taskItemId,
+        options[0].ItmValue,
+        options[1].ItmValue,
+        Convert.ToBoolean(options[2].ItmValue)
+      );
+    }
+
+    private void DoneInputField()
+    {
+      bool isCompleted = !Convert.ToBoolean(options[2].ItmValue);
+
+      options[2].ItmValue = Convert.ToString(isCompleted);
+      options[2].ItmLabel = !isCompleted ? "Done: []" : "Done: [x]";
+
+      taskItemsController.EditTaskItem(
+        authSession,
+        taskItemId,
+        options[0].ItmValue,
+        options[1].ItmValue,
+        isCompleted
+      );
+    }
 
     public string? ExecuteOption(int selectIndex)
     {
       switch (selectIndex)
       {
-        case 0:
-          // change title
-          return "home";
-        case 1:
-          // change description
-          return "taskitems";
-        case 2:
-          // check
-          return "taskitems";
         case 3:
-          // delete
+          taskItemsController.RemoveUserTaskItem(authSession, taskItemId);
+
           return "taskitems";
         case 4:
           return "taskitems";
