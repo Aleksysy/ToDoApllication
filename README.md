@@ -48,7 +48,7 @@ dotnet publish -c Release -r win-x64 --self-contained false -o ./publish/windows
 dotnet publish -c Release -r linux-x64 --self-contained false -o ./publish/linux 
 ```
 
-Or you can use the prebuilt application in the repo under ./publish/yourOS
+Or you can use the prebuilt application in the repo under ./publish/OS
 
 ## Usage
 
